@@ -8,6 +8,7 @@ const char PLAYER_2 = 'X';
 char CURRENT_PLAYER = '-';
 const int columnLength = 3;
 const int rowLength = 3;
+bool gameOver = false;
 
 char board[columnLength][rowLength];
 
@@ -33,6 +34,10 @@ void Display()
         }
         std::cout << "\n\n\n";
     }
+    if (!gameOver)
+    {
+        std::cout << "-----------------\n\n\n";
+    }
 }
 
 void SetValue(int col, int row, char symbol)
@@ -40,8 +45,21 @@ void SetValue(int col, int row, char symbol)
     if (IsFree(col, row))
     {
         board[col][row] = symbol;
+        Display();
+
+        if (CURRENT_PLAYER == PLAYER_1)
+        {
+            CURRENT_PLAYER = PLAYER_2;
+        }
+        else
+        {
+            CURRENT_PLAYER = PLAYER_1;
+        }
     }
-    Display();
+    else
+    {
+        SetValue((rand() % columnLength), (rand() % rowLength), CURRENT_PLAYER);
+    }
 }
 
 void Initialise()
@@ -60,9 +78,22 @@ void Initialise()
 int main()
 {
     srand(time(0));
-    bool gameOver = false;
+
+    int totalLength = columnLength * rowLength;
+    int count = 1;
+
     Initialise();
     SetValue(0, 0, CURRENT_PLAYER);
+
+    for (count = 2; count < totalLength; count++)
+    {
+        SetValue((rand() % columnLength), (rand() % rowLength), CURRENT_PLAYER);
+    }
+    if (count == 9)
+    {
+        gameOver = true;
+        SetValue((rand() % columnLength), (rand() % rowLength), CURRENT_PLAYER);
+    }
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
