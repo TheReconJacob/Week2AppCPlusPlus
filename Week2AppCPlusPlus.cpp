@@ -10,6 +10,18 @@ const int rowLength = 3;
 
 char board[columnLength][rowLength];
 
+void Display()
+{
+    for (int x = 0; x < columnLength; x++)
+    {
+        for (int y = 0; y < rowLength; y++)
+        {
+            std::cout << board[x][y] << "\t";
+        }
+        std::cout << "\n\n\n";
+    }
+}
+
 void initialise()
 {
     for (int x = 0; x < columnLength; x++)
@@ -19,11 +31,7 @@ void initialise()
             board[x][y] = '-';
         }
     }
-}
-
-void Display()
-{
-
+    Display();
 }
 
 int main()
