@@ -12,6 +12,48 @@ bool gameOver = false;
 
 char board[rowLength][columnLength];
 
+int winningStates[8][3][2] =
+{
+    {{0,0},{0,1},{0,2}},
+    {{1,0},{1,1},{1,2}},
+    {{2,0},{2,1},{2,2}},
+    {{0,0},{1,0},{2,0}},
+    {{0,1},{1,1},{2,1}},
+    {{0,2},{1,2},{2,2}},
+    {{0,0},{1,1},{2,2}},
+    {{2,0},{1,1},{0,2}}
+};
+
+bool Match(int row, int col, char symbol)
+{
+    if ((symbol == board[row][0]) &&
+        (symbol == board[row][1]) &&
+        (symbol == board[row][2]))
+    {
+        return true;
+    }
+    if ((symbol == board[0][col]) &&
+        (symbol == board[1][col]) &&
+        (symbol == board[2][col]))
+    {
+        return true;
+    }
+    if ((symbol == board[0][0]) &&
+        symbol == board[1][1] &&
+        symbol == board[2][2])
+    {
+        return true;
+    }
+    if ((symbol == board[2][0]) &&
+        symbol == board[1][1] &&
+        symbol == board[0][2])
+    {
+        return true;
+    }
+    return false;
+    
+}
+
 bool IsFree(int row, int col)
 {
     if (board[row][col] == '-')
@@ -47,6 +89,12 @@ void SetValue(int row, int col, char symbol)
         board[row][col] = symbol;
         Display();
 
+        if (Match(row, col, symbol))
+        {
+            std::cout << "\n\n" << CURRENT_PLAYER << " is the winner!\n\n";
+            gameOver = true;
+        }
+
         if (CURRENT_PLAYER == PLAYER_1)
         {
             CURRENT_PLAYER = PLAYER_2;
@@ -81,26 +129,18 @@ int main()
 
     int totalLength = rowLength * columnLength;
     int count = 1;
-    int winningStates[8][3][2] =
-    {
-        {{0,0},{0,1},{0,2}},
-        {{1,0},{1,1},{1,2}},
-        {{2,0},{2,1},{2,2}},
-        {{0,0},{1,0},{2,0}},
-        {{0,1},{1,1},{2,1}},
-        {{0,2},{1,2},{2,2}},
-        {{0,0},{1,1},{2,2}},
-        {{2,0},{1,1},{0,2}}
-    };
 
     Initialise();
     SetValue(0, 0, CURRENT_PLAYER);
 
     for (count = 2; count < totalLength; count++)
     {
-        SetValue((rand() % rowLength), (rand() % columnLength), CURRENT_PLAYER);
+        if(!gameOver)
+        {
+            SetValue((rand() % rowLength), (rand() % columnLength), CURRENT_PLAYER);
+        }
     }
-    if (count == 9)
+    if (count == 9 && !gameOver)
     {
         gameOver = true;
         SetValue((rand() % rowLength), (rand() % columnLength), CURRENT_PLAYER);
