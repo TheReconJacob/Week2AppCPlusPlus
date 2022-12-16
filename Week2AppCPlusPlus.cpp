@@ -14,42 +14,58 @@ char board[rowLength][columnLength];
 
 bool Match(int row, int col, char symbol)
 {
-    int i = 0;
-    if ((symbol == board[row][i++]) &&
-        (symbol == board[row][i++]) &&
-        (symbol == board[row][i]))
+    int matches = 0;
+    for (int i = 0; i < columnLength; i++)
     {
-        return true;
-    }
-    i = 0;
-    if ((symbol == board[i++][col]) &&
-        (symbol == board[i++][col]) &&
-        (symbol == board[i][col]))
-    {
-        return true;
-    }
-    i = 0;
-    if ((symbol == board[i][i++]))
-    {
-        if (symbol == board[i][i++])
+        if (symbol == board[row][i])
         {
-            if (symbol == board[i][i])
-            {
-                return true;
-            }
+            matches++;
+        }
+        if (matches == columnLength)
+        {
+            return true;
         }
     }
-    else
+
+    matches = 0;
+    for (int i = 0; i < rowLength; i++)
     {
-        i++;
+        if (symbol == board[i][col])
+        {
+            matches++;
+        }
+        if (matches == rowLength)
+        {
+            return true;
+        }
     }
 
-    int n = 0;
-    if ((symbol == board[i--][n++]) &&
-        symbol == board[i--][n++] &&
-        symbol == board[i][n])
+    matches = 0;
+    for (int i = 0; i < std::min(columnLength, rowLength); i++)
     {
-        return true;
+        if ((symbol == board[i][i]))
+        {
+            matches++;
+        }
+        if (matches == std::min(columnLength, rowLength))
+        {
+            return true;
+        }
+    }
+
+    matches = 0;
+    int i;
+    int n;
+    for (i = 0, n = (std::min(columnLength, rowLength) - 1); i < std::min(columnLength, rowLength); i++, n--)
+    {
+        if (symbol == board[i][n])
+        {
+            matches++;
+        }
+        if (matches == std::min(columnLength, rowLength))
+        {
+            return true;
+        }
     }
     return false;
     
