@@ -12,41 +12,42 @@ bool gameOver = false;
 
 char board[rowLength][columnLength];
 
-int winningStates[8][3][2] =
-{
-    {{0,0},{0,1},{0,2}},
-    {{1,0},{1,1},{1,2}},
-    {{2,0},{2,1},{2,2}},
-    {{0,0},{1,0},{2,0}},
-    {{0,1},{1,1},{2,1}},
-    {{0,2},{1,2},{2,2}},
-    {{0,0},{1,1},{2,2}},
-    {{2,0},{1,1},{0,2}}
-};
-
 bool Match(int row, int col, char symbol)
 {
-    if ((symbol == board[row][0]) &&
-        (symbol == board[row][1]) &&
-        (symbol == board[row][2]))
+    int i = 0;
+    if ((symbol == board[row][i++]) &&
+        (symbol == board[row][i++]) &&
+        (symbol == board[row][i]))
     {
         return true;
     }
-    if ((symbol == board[0][col]) &&
-        (symbol == board[1][col]) &&
-        (symbol == board[2][col]))
+    i = 0;
+    if ((symbol == board[i++][col]) &&
+        (symbol == board[i++][col]) &&
+        (symbol == board[i][col]))
     {
         return true;
     }
-    if ((symbol == board[0][0]) &&
-        symbol == board[1][1] &&
-        symbol == board[2][2])
+    i = 0;
+    if ((symbol == board[i][i++]))
     {
-        return true;
+        if (symbol == board[i][i++])
+        {
+            if (symbol == board[i][i])
+            {
+                return true;
+            }
+        }
     }
-    if ((symbol == board[2][0]) &&
-        symbol == board[1][1] &&
-        symbol == board[0][2])
+    else
+    {
+        i++;
+    }
+
+    int n = 0;
+    if ((symbol == board[i--][n++]) &&
+        symbol == board[i--][n++] &&
+        symbol == board[i][n])
     {
         return true;
     }
@@ -140,10 +141,10 @@ int main()
             SetValue((rand() % rowLength), (rand() % columnLength), CURRENT_PLAYER);
         }
     }
-    if (count == 9 && !gameOver)
+    if (count == totalLength && !gameOver)
     {
-        gameOver = true;
         SetValue((rand() % rowLength), (rand() % columnLength), CURRENT_PLAYER);
+        gameOver = true;
     }
 }
 
