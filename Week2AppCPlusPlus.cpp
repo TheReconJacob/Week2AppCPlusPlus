@@ -93,10 +93,7 @@ void Display()
         }
         std::cout << "\n\n\n";
     }
-    if (!gameOver)
-    {
-        std::cout << "-----------------\n\n\n";
-    }
+    std::cout << "-----------------\n\n\n";
 }
 
 void SetValue(int row, int col, char symbol)
@@ -160,6 +157,7 @@ int main()
     if (count == totalLength && !gameOver)
     {
         SetValue((rand() % rowLength), (rand() % columnLength), CURRENT_PLAYER);
+        std::cout << "It's a tie!";
         gameOver = true;
     }
 }
