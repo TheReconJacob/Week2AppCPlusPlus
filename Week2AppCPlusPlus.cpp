@@ -81,6 +81,17 @@ int main()
 
     int totalLength = rowLength * columnLength;
     int count = 1;
+    int winningStates[8][3][2] =
+    {
+        {{0,0},{0,1},{0,2}},
+        {{1,0},{1,1},{1,2}},
+        {{2,0},{2,1},{2,2}},
+        {{0,0},{1,0},{2,0}},
+        {{0,1},{1,1},{2,1}},
+        {{0,2},{1,2},{2,2}},
+        {{0,0},{1,1},{2,2}},
+        {{2,0},{1,1},{0,2}}
+    };
 
     Initialise();
     SetValue(0, 0, CURRENT_PLAYER);
