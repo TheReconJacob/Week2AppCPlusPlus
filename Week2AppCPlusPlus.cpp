@@ -5,10 +5,23 @@
 
 const char PLAYER_1 = 'O';
 const char PLAYER_2 = 'X';
+char CURRENT_PLAYER = '-';
 const int columnLength = 3;
 const int rowLength = 3;
 
 char board[columnLength][rowLength];
+
+bool IsFree(int col, int row)
+{
+    if (board[col][row] == '-')
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
 
 void Display()
 {
@@ -22,7 +35,16 @@ void Display()
     }
 }
 
-void initialise()
+void SetValue(int col, int row, char symbol)
+{
+    if (IsFree(col, row))
+    {
+        board[col][row] = symbol;
+    }
+    Display();
+}
+
+void Initialise()
 {
     for (int x = 0; x < columnLength; x++)
     {
@@ -32,11 +54,15 @@ void initialise()
         }
     }
     Display();
+    CURRENT_PLAYER = PLAYER_1;
 }
 
 int main()
 {
-    initialise();
+    srand(time(0));
+    bool gameOver = false;
+    Initialise();
+    SetValue(0, 0, CURRENT_PLAYER);
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
